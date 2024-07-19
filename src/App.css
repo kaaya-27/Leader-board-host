@@ -1,0 +1,156 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; 
+}
+html, body, #root{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+ 
+}
+.App{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg,#d2001a,#7462ff);
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+  background-color: rgba(255, 255, 255, .1);
+  backdrop-filter: blur(50px);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0px 25px 45px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar h1 {
+  margin: 0;
+  color: #000000;
+}
+
+section{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 4rem;
+}
+
+
+.table-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.table-container > *:not(.btn) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; 
+}
+
+.btn {
+  margin-top: 1rem;
+  border: auto;
+  background: rgba(255, 255, 255, .1);;
+  color: #000000;
+  backdrop-filter: blur(50px);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 25px 45px rgba(0, 0, 0, 0.2);
+  align-items: center;
+}
+
+.scroll-section h2 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.scroll-section{
+  width: 100%; 
+  margin-bottom: 20px; 
+  position: relative;
+}
+
+html {
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
+.footer {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, .1);
+  backdrop-filter: blur(50px);
+  position: absolute;
+  padding: 10px 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.marquee {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: marquee 10s linear infinite;
+}
+ 
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scroll-animation {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-50px); }
+  100% { transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.8rem; 
+  }
+
+  .btn {
+    padding: 0.4rem 0.8rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .table {
+    font-size: 0.7rem; 
+  }
+
+  .btn {
+    padding: 0.3rem 0.6rem; 
+  }
+
+  .scroll-content {
+    padding: 10px; 
+  }
+
+  .animated-box {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
+
