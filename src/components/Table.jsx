@@ -1,10 +1,10 @@
-import React from 'react';
+import React,{ forwardRef} from 'react';
 import "./Table.css";
 import { FaRegClock, FaTrophy} from "react-icons/fa";
 
-export const Table = ({ rows }) => {
+export const Table = forwardRef(({ rows }, ref) => {
     return (
-        <div className='table-wrapper'>
+        <div className='table-wrapper' ref={ref}>
             <table className='table' >
                 <thead>
                     <tr>
@@ -28,4 +28,4 @@ export const Table = ({ rows }) => {
         </div>
         
     )
-};
+});

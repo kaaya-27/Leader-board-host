@@ -62,7 +62,7 @@ export const Modal = ({ closemodal, onSubmit }) =>{
                         <input name='time' value={formState.time} onChange={handleChange }/>
                     </div>
                     {errors && <div className="error">{`Please include: ${errors}`}</div>}
-                    <button type='submit'className='btn' onClick={handleSubmit}>Submit</button>
+                    <button type='submit'className='btn'>Submit</button>
                 </form>
             </div>
         </div>

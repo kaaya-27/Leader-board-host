@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import React from 'react';
 import { Modal } from './components/Modal';
 import { Table } from './components/Table';
 import ImageSlider from './components/Slider';
-import './App.css'
+import './App.css';
+import { convertTimeToMilliSeconds } from './utils';
 
   function App() {
     const [modalOpen, setModalOpen ] = useState(false);
@@ -61,10 +62,32 @@ import './App.css'
       { id: 50, name: 'Hannah Walker', time: '02:02:45' },
     ]);
 
+    const tableRef = useRef(null);
+
     const handleSubmit = (newRow) => {
-      setRows([...rows, newRow]);
+
+      const newRows = [...rows, newRow];
+      const sortedRows = newRows.sort((a, b) => convertTimeToMilliSeconds(a.time) - convertTimeToMilliSeconds(b.time));
+      setRows(sortedRows);
       setModalOpen(false);
+      setTimeout(() => scrollToNewRow(newRow), 300); 
     };
+
+    const scrollToNewRow = (newRow) => {
+      const index = rows.findIndex(row => row.id === newRow.id);
+      if (tableRef.current && index !== -1) {
+        const rowElement = tableRef.current.querySelectorAll('tbody tr')[index];
+        if (rowElement) {
+          rowElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    };
+
+  
+    useEffect(() => {
+      const sortedRows = [...rows].sort((a, b) => convertTimeToMilliSeconds(a.time) - convertTimeToMilliSeconds(b.time));
+      setRows(sortedRows);
+    }, [rows]);
 
 
     return (
@@ -74,7 +97,7 @@ import './App.css'
         <h1>Leaderboard</h1>
       </div>
       <section className='table-section'>
-        <Table rows={rows}/>
+        <Table rows={rows} ref={tableRef}/>
         <button className='btn' onClick={()=> setModalOpen(true)}>AddScore</button>
         {modalOpen && <Modal closemodal={() => {
           setModalOpen(false); 
