@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import React from 'react';
 import { Modal } from './components/Modal';
 import { Table } from './components/Table';
@@ -8,7 +8,6 @@ import { convertTimeToMilliSeconds } from './utils';
 
   function App() {
     const [modalOpen, setModalOpen ] = useState(false);
-    
     const [rows, setRows] = useState([
       { id: 1, name: 'Tom Holland', time: '00:23:45' },
       { id: 2, name: 'Pip-Fitz-Amobi', time: '00:25:35' },
@@ -62,16 +61,22 @@ import { convertTimeToMilliSeconds } from './utils';
       { id: 50, name: 'Hannah Walker', time: '02:02:45' },
     ]);
 
+    const [newEntryId, setNewEntryId] = useState(null);
     const tableRef = useRef(null);
 
     const handleSubmit = (newRow) => {
-
       const newRows = [...rows, newRow];
-      const sortedRows = newRows.sort((a, b) => convertTimeToMilliSeconds(a.time) - convertTimeToMilliSeconds(b.time));
+      const sortedRows = newRows.sort(
+        (a, b) => convertTimeToMilliSeconds(a.time) - convertTimeToMilliSeconds(b.time)
+      );
       setRows(sortedRows);
+      setNewEntryId(newRow.id);
       setModalOpen(false);
-      setTimeout(() => scrollToNewRow(newRow), 300); 
-    };
+      setTimeout(() => {
+        scrollToNewRow(newRow);
+        setTimeout(() => setNewEntryId(null), 1000); 
+    }, 300);
+};
 
     const scrollToNewRow = (newRow) => {
       const index = rows.findIndex(row => row.id === newRow.id);
@@ -83,13 +88,14 @@ import { convertTimeToMilliSeconds } from './utils';
       }
     };
 
+    const getDisplayRows = () => {
+      return rows.map((row, index) => ({
+          ...row,
+          displayId: index + 1 
+      }));
+    };
+
   
-    useEffect(() => {
-      const sortedRows = [...rows].sort((a, b) => convertTimeToMilliSeconds(a.time) - convertTimeToMilliSeconds(b.time));
-      setRows(sortedRows);
-    }, [rows]);
-
-
     return (
     
     <div className='App'>
@@ -97,7 +103,7 @@ import { convertTimeToMilliSeconds } from './utils';
         <h1>Leaderboard</h1>
       </div>
       <section className='table-section'>
-        <Table rows={rows} ref={tableRef}/>
+        <Table rows={getDisplayRows()} ref={tableRef} newEntryId={newEntryId} />
         <button className='btn' onClick={()=> setModalOpen(true)}>AddScore</button>
         {modalOpen && <Modal closemodal={() => {
           setModalOpen(false); 
